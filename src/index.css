@@ -2,95 +2,112 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* iOS 26 Political Monitoring SaaS - Design System */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Brazilian iOS Theme - Light Mode */
+    --background: 210 20% 98%;
+    --foreground: 215 60% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 215 60% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 215 60% 12%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - Petrol Blue */
+    --primary: 215 60% 12%;
+    --primary-foreground: 210 20% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - Accent Blue */
+    --secondary: 228 92% 55%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted - Apple Gray */
+    --muted: 220 10% 85%;
+    --muted-foreground: 220 10% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent - Trust Green */
+    --accent: 145 65% 44%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Destructive - Warning Red */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Brazilian Identity Colors */
+    --trust-green: 145 65% 44%;
+    --institutional-yellow: 44 100% 65%;
+    --petrol-blue: 215 60% 12%;
+    --accent-blue: 228 92% 55%;
+    --ice-white: 210 20% 98%;
+    --apple-gray: 220 10% 60%;
 
-    --radius: 0.5rem;
+    /* Glass Effect */
+    --glass-bg: 0 0% 100% / 0.7;
+    --glass-border: 0 0% 100% / 0.3;
+    --glass-shadow: 215 60% 12% / 0.08;
 
-    --sidebar-background: 0 0% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 228 92% 55%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    --radius: 1rem;
 
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Sidebar */
+    --sidebar-background: 215 60% 12%;
+    --sidebar-foreground: 210 20% 98%;
+    --sidebar-primary: 228 92% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 215 50% 18%;
+    --sidebar-accent-foreground: 210 20% 98%;
+    --sidebar-border: 215 50% 20%;
+    --sidebar-ring: 228 92% 55%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 215 60% 8%;
+    --foreground: 210 20% 98%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 215 55% 12%;
+    --card-foreground: 210 20% 98%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 215 55% 12%;
+    --popover-foreground: 210 20% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 210 20% 98%;
+    --primary-foreground: 215 60% 12%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 228 92% 55%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 215 50% 18%;
+    --muted-foreground: 220 10% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 145 65% 44%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --glass-bg: 215 55% 12% / 0.8;
+    --glass-border: 0 0% 100% / 0.1;
+    --glass-shadow: 0 0% 0% / 0.3;
+
+    --border: 215 50% 18%;
+    --input: 215 50% 18%;
+    --ring: 228 92% 55%;
+
+    --sidebar-background: 215 60% 6%;
+    --sidebar-foreground: 210 20% 98%;
+    --sidebar-primary: 228 92% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 215 55% 12%;
+    --sidebar-accent-foreground: 210 20% 98%;
+    --sidebar-border: 215 50% 15%;
+    --sidebar-ring: 228 92% 55%;
   }
 }
 
@@ -100,6 +117,179 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
+
+  /* iOS Typography Scale */
+  .text-display {
+    @apply text-4xl font-semibold tracking-tight;
+  }
+
+  .text-title-1 {
+    @apply text-2xl font-semibold tracking-tight;
+  }
+
+  .text-title-2 {
+    @apply text-xl font-semibold;
+  }
+
+  .text-title-3 {
+    @apply text-lg font-medium;
+  }
+
+  .text-headline {
+    @apply text-base font-semibold;
+  }
+
+  .text-body {
+    @apply text-base font-normal;
+  }
+
+  .text-callout {
+    @apply text-sm font-normal;
+  }
+
+  .text-subhead {
+    @apply text-sm font-medium;
+  }
+
+  .text-footnote {
+    @apply text-xs font-normal;
+  }
+
+  .text-caption {
+    @apply text-xs font-light text-muted-foreground;
+  }
+}
+
+@layer components {
+  /* iOS Glass Card */
+  .glass-card {
+    @apply bg-card/70 backdrop-blur-xl border border-white/20 shadow-lg shadow-black/5;
+  }
+
+  /* iOS Glass Card Dark */
+  .glass-card-dark {
+    @apply bg-sidebar/90 backdrop-blur-xl border border-white/10 shadow-xl;
+  }
+
+  /* Sentiment Badges */
+  .badge-positive {
+    @apply bg-accent/15 text-accent border border-accent/30;
+  }
+
+  .badge-negative {
+    @apply bg-destructive/15 text-destructive border border-destructive/30;
+  }
+
+  .badge-neutral {
+    @apply bg-muted text-muted-foreground border border-muted;
+  }
+
+  .badge-warning {
+    @apply bg-yellow-500/15 text-yellow-600 border border-yellow-500/30;
+  }
+
+  /* iOS Button Styles */
+  .btn-ios {
+    @apply rounded-xl font-semibold transition-all duration-200 active:scale-[0.98];
+  }
+
+  .btn-ios-primary {
+    @apply btn-ios bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-lg shadow-secondary/25;
+  }
+
+  .btn-ios-secondary {
+    @apply btn-ios glass-card hover:bg-card/90;
+  }
+
+  /* iOS Progress Ring */
+  .progress-ring {
+    @apply transition-all duration-500 ease-out;
+  }
+
+  /* Smooth Scroll */
+  .scroll-smooth-ios {
+    @apply scroll-smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* iOS Divider */
+  .divider-ios {
+    @apply h-px bg-border/50;
+  }
+
+  /* Stat Card */
+  .stat-card {
+    @apply glass-card rounded-2xl p-5 transition-all duration-300 hover:shadow-xl hover:scale-[1.02];
+  }
+
+  /* Feed Card */
+  .feed-card {
+    @apply glass-card rounded-2xl p-4 transition-all duration-300 hover:bg-card/90;
+  }
+
+  /* Navigation Item Active */
+  .nav-item-active {
+    @apply bg-secondary/10 text-secondary;
+  }
+}
+
+@layer utilities {
+  /* Animation Utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.4s ease-out forwards;
+  }
+
+  .animate-pulse-soft {
+    animation: pulseSoft 2s ease-in-out infinite;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { 
+      opacity: 0; 
+      transform: translateY(20px); 
+    }
+    to { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
+  }
+
+  @keyframes scaleIn {
+    from { 
+      opacity: 0; 
+      transform: scale(0.95); 
+    }
+    to { 
+      opacity: 1; 
+      transform: scale(1); 
+    }
+  }
+
+  @keyframes pulseSoft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  /* Stagger Animation Delays */
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+  .stagger-5 { animation-delay: 0.5s; }
 }
