@@ -50,7 +50,7 @@ const pricingPlans = [
   {
     name: "Deputado",
     price: 1500,
-    description: "Cobertura estadual ampliada",
+    description: "Cobertura federal ampliada",
     features: [
       "Tudo do plano Prefeito",
       "Até 3 políticos",
@@ -127,7 +127,10 @@ export default function Landing() {
                 <Button variant="ghost">Entrar</Button>
               </Link>
               <Link to="/auth?mode=signup">
-                <Button variant="hero" className="hidden sm:flex">
+                <Button
+                  variant="hero"
+                  className="hidden sm:flex shadow-none bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:from-indigo-500 hover:to-violet-500"
+                >
                   Começar Agora
                   <ArrowRight className="w-4 h-4" />
                 </Button>
@@ -148,7 +151,7 @@ export default function Landing() {
                 Monitoramento com IA Avançada
               </Badge>
               
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6 opacity-0 animate-fade-in" style={{ animationDelay: "100ms", animationFillMode: "forwards" }}>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight mb-6 opacity-0 animate-fade-in" style={{ animationDelay: "100ms", animationFillMode: "forwards" }}>
                 Monitore sua{" "}
                 <span className="text-secondary">reputação política</span>{" "}
                 em tempo real
@@ -161,7 +164,11 @@ export default function Landing() {
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 opacity-0 animate-fade-in" style={{ animationDelay: "300ms", animationFillMode: "forwards" }}>
                 <Link to="/auth?mode=signup">
-                  <Button variant="hero" size="lg" className="text-lg px-8 py-6">
+                  <Button
+                    variant="hero"
+                    size="lg"
+                    className="text-lg px-8 py-6 shadow-none bg-rose-500 text-white hover:bg-rose-600"
+                  >
                     Começar Gratuitamente
                     <ChevronRight className="w-5 h-5" />
                   </Button>
