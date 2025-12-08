@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { BarChart3, Bell, Menu, User } from "lucide-react";
+import { BarChart3, Bell, Menu, User, LogOut } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate, Link } from "react-router-dom";
+import { toast } from "sonner";
 
 interface HeaderProps {
   className?: string;
@@ -9,6 +12,14 @@ interface HeaderProps {
 
 export function Header({ className }: HeaderProps) {
   const [notifications] = useState(3);
+  const { signOut, user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast.success("Logout realizado com sucesso!");
+    navigate("/");
+  };
 
   return (
     <header className={cn(
@@ -59,6 +70,11 @@ export function Header({ className }: HeaderProps) {
             {/* Profile */}
             <Button variant="ghost" size="icon" className="hidden sm:flex">
               <User className="w-5 h-5" />
+            </Button>
+
+            {/* Logout */}
+            <Button variant="ghost" size="icon" onClick={handleSignOut} className="hidden sm:flex">
+              <LogOut className="w-5 h-5" />
             </Button>
 
             {/* Mobile Menu */}

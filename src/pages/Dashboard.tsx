@@ -5,8 +5,10 @@ import { MentionChart } from "@/components/dashboard/MentionChart";
 import { MentionFeed } from "@/components/feed/MentionFeed";
 import { RiskCard } from "@/components/dashboard/RiskCard";
 import { TopSourcesCard } from "@/components/dashboard/TopSourcesCard";
-import { PricingCard } from "@/components/pricing/PricingCard";
 import { Mention } from "@/components/feed/MentionCard";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { 
   TrendingUp, 
   MessageSquare, 
@@ -79,63 +81,24 @@ const topSources = [
   { name: "YouTube", type: "video" as const, mentions: 18, percentage: 34 },
 ];
 
-const pricingPlans = [
-  {
-    name: "Vereador",
-    price: 500,
-    description: "Ideal para mandatos municipais",
-    features: [
-      "Monitoramento básico",
-      "Alertas por e-mail",
-      "1 político monitorado",
-      "Relatório semanal",
-      "Suporte por e-mail",
-    ],
-  },
-  {
-    name: "Prefeito",
-    price: 900,
-    description: "Para gestões municipais completas",
-    features: [
-      "Tudo do plano Vereador",
-      "Dashboard completo",
-      "Relatório mensal PDF",
-      "Análise de sentimento IA",
-      "Suporte prioritário",
-      "Alertas em tempo real",
-    ],
-    highlighted: true,
-    badge: "Mais Popular",
-  },
-  {
-    name: "Deputado",
-    price: 1500,
-    description: "Cobertura estadual ampliada",
-    features: [
-      "Tudo do plano Prefeito",
-      "Até 3 políticos",
-      "Relatórios premium",
-      "Status de prioridade",
-      "Análise de tendências",
-      "API de integração",
-    ],
-  },
-  {
-    name: "Elite",
-    price: 2500,
-    description: "Para grandes assessorias",
-    features: [
-      "Monitoramento ilimitado",
-      "Suporte imediato 24/7",
-      "Tendências avançadas",
-      "Predições de reputação",
-      "Treinamento exclusivo",
-      "Gerente de conta dedicado",
-    ],
-  },
-];
+export default function Dashboard() {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
 
-const Index = () => {
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/auth");
+    }
+  }, [user, loading, navigate]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-pulse text-muted-foreground">Carregando...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -146,7 +109,7 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
             <div className="opacity-0 animate-fade-in" style={{ animationDelay: "100ms", animationFillMode: "forwards" }}>
               <p className="text-caption uppercase tracking-wider mb-1">Dashboard</p>
-              <h1 className="text-display">Bom dia, João</h1>
+              <h1 className="text-display">Bom dia, {user?.user_metadata?.full_name?.split(" ")[0] || "Usuário"}</h1>
               <p className="text-body text-muted-foreground mt-1">
                 Acompanhe sua reputação em tempo real
               </p>
@@ -248,28 +211,6 @@ const Index = () => {
           <MentionFeed mentions={mentions} />
         </section>
 
-        {/* Pricing Section */}
-        <section className="py-16 border-t border-border/50">
-          <div className="text-center mb-12 opacity-0 animate-fade-in" style={{ animationDelay: "100ms", animationFillMode: "forwards" }}>
-            <p className="text-caption uppercase tracking-wider mb-2">Planos</p>
-            <h2 className="text-display mb-3">Escolha seu Plano</h2>
-            <p className="text-body text-muted-foreground max-w-2xl mx-auto">
-              Monitore sua reputação política com inteligência artificial. 
-              Todos os planos incluem coleta automática 24/7 e filtragem inteligente.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4">
-            {pricingPlans.map((plan, index) => (
-              <PricingCard
-                key={plan.name}
-                {...plan}
-                delay={200 + index * 100}
-              />
-            ))}
-          </div>
-        </section>
-
         {/* Footer */}
         <footer className="py-8 border-t border-border/50">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -287,6 +228,4 @@ const Index = () => {
       </main>
     </div>
   );
-};
-
-export default Index;
+}
