@@ -40,7 +40,7 @@ const pricingPlans = [
       "Tudo do plano Vereador",
       "Dashboard completo",
       "Relatório mensal PDF",
-      "Análise de sentimento IA",
+      "Análise de sentimento",
       "Suporte prioritário",
       "Alertas em tempo real",
     ],
@@ -79,7 +79,7 @@ const features = [
   {
     icon: Brain,
     title: "Filtragem Inteligente",
-    description: "IA avançada que identifica menções corretas e remove homônimos automaticamente",
+    description: "Sistema que identifica menções corretas e remove homônimos automaticamente",
   },
   {
     icon: Zap,
@@ -118,7 +118,7 @@ export default function Landing() {
               </div>
               <div>
                 <h1 className="text-headline">PolitiMonitor</h1>
-                <p className="text-caption hidden sm:block">Inteligência Política</p>
+                <p className="text-caption hidden sm:block">Monitoramento Político</p>
               </div>
             </div>
 
@@ -148,7 +148,7 @@ export default function Landing() {
             <div className="max-w-4xl mx-auto text-center">
               <Badge className="mb-6 bg-secondary/10 text-secondary border-secondary/20 px-4 py-1.5">
                 <Zap className="w-3.5 h-3.5 mr-1.5" />
-                Monitoramento com IA Avançada
+                Monitoramento em Tempo Real
               </Badge>
               
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight mb-6 opacity-0 animate-fade-in" style={{ animationDelay: "100ms", animationFillMode: "forwards" }}>
@@ -158,7 +158,7 @@ export default function Landing() {
               </h1>
               
               <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 opacity-0 animate-fade-in" style={{ animationDelay: "200ms", animationFillMode: "forwards" }}>
-                Inteligência artificial para capturar, filtrar e analisar todas as menções sobre você. 
+                Captura, filtragem e análise automática de todas as menções sobre você. 
                 Tome decisões estratégicas com dados precisos.
               </p>
 
@@ -228,7 +228,7 @@ export default function Landing() {
               <p className="text-caption uppercase tracking-wider mb-2">Funcionalidades</p>
               <h2 className="text-display mb-4">Tudo que você precisa para proteger sua imagem</h2>
               <p className="text-body text-muted-foreground max-w-2xl mx-auto">
-                Nossa plataforma combina inteligência artificial com análise especializada 
+                Nossa plataforma oferece monitoramento contínuo com análise especializada 
                 para entregar insights acionáveis.
               </p>
             </div>
