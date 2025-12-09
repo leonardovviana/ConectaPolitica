@@ -1,29 +1,27 @@
-import { Header } from "@/components/layout/Header";
-import { StatCard } from "@/components/dashboard/StatCard";
-import { SentimentRing, SentimentLegend } from "@/components/dashboard/SentimentRing";
 import { MentionChart } from "@/components/dashboard/MentionChart";
-import { MentionFeed } from "@/components/feed/MentionFeed";
 import { RiskCard } from "@/components/dashboard/RiskCard";
+import { SentimentLegend, SentimentRing } from "@/components/dashboard/SentimentRing";
+import { StatCard } from "@/components/dashboard/StatCard";
 import { TopSourcesCard } from "@/components/dashboard/TopSourcesCard";
-import { Mention } from "@/components/feed/MentionCard";
-import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useMemo } from "react";
-import { 
-  TrendingUp, 
-  MessageSquare, 
-  Newspaper, 
-  Users,
-  ChevronRight,
-  Database
-} from "lucide-react";
+import { MentionFeed } from "@/components/feed/MentionFeed";
+import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
 import { monitoringService } from "@/services/monitoringService";
-import { useState } from "react";
-import { RefreshCw } from "lucide-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+    ChevronRight,
+    Database,
+    MessageSquare,
+    Newspaper,
+    RefreshCw,
+    TrendingUp,
+    Users
+} from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 // Mock data for chart (could be aggregated from real data in a real app)
 const defaultChartData = [

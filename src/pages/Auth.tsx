@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams, Link } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { TrendingUp, Mail, Lock, User, ArrowRight, Loader2 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { ArrowRight, Loader2, Lock, Mail, TrendingUp, User } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
 

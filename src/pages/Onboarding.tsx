@@ -1,21 +1,21 @@
+import { Button } from "@/components/ui/button";
+import {
+    BarChart3,
+    Bell,
+    Brain,
+    ChevronLeft,
+    ChevronRight,
+    FileText,
+    Globe,
+    Instagram,
+    Newspaper,
+    Shield,
+    TrendingUp,
+    Youtube,
+    Zap
+} from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { 
-  TrendingUp, 
-  Brain, 
-  Shield, 
-  BarChart3, 
-  Zap,
-  ChevronRight,
-  ChevronLeft,
-  Newspaper,
-  Instagram,
-  Youtube,
-  Globe,
-  Bell,
-  FileText
-} from "lucide-react";
 
 interface OnboardingStep {
   icon: React.ElementType;

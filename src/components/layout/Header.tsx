@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { BarChart3, Bell, Menu, User, LogOut } from "lucide-react";
-import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate, Link } from "react-router-dom";
+import { cn } from "@/lib/utils";
+import { BarChart3, Bell, LogOut, Menu, User } from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 interface HeaderProps {
