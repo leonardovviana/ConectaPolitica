@@ -1,53 +1,99 @@
-# Welcome to your Lovable project
+# Conecta Política
 
-## Project info
+Conecta Política é uma plataforma de inteligência política em tempo real, projetada para vereadores, prefeitos e deputados monitorarem sua reputação, acompanharem menções e analisarem o sentimento do público com o auxílio de Inteligência Artificial.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Funcionalidades
 
-## How can I edit this code?
+- **Monitoramento em Tempo Real**: Acompanhe menções em redes sociais e notícias.
+- **Análise de Sentimento**: Utilize IA para entender o sentimento (positivo, negativo, neutro) das menções.
+- **Dashboard Intuitivo**: Visualize dados críticos através de gráficos e cards informativos.
+- **Gestão de Riscos**: Identifique potenciais crises de imagem antes que elas cresçam.
+- **Relatórios**: Gere relatórios para análise de desempenho e estratégia.
 
-There are several ways of editing your application.
+## Tecnologias Utilizadas
 
-**Use Lovable**
+- **Frontend**: React, TypeScript, Vite
+- **UI/UX**: Tailwind CSS, Shadcn/ui, Lucide React
+- **Gerenciamento de Estado**: TanStack Query
+- **Backend/BaaS**: Supabase (Autenticação, Banco de Dados)
+- **Gráficos**: Recharts
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Pré-requisitos
 
-Changes made via Lovable will be committed automatically to this repo.
+- Node.js (versão 18 ou superior)
+- npm ou yarn ou bun
 
-**Use your preferred IDE**
+## Configuração do Ambiente
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+1.  Clone o repositório:
+    ```bash
+    git clone https://github.com/seu-usuario/conecta-politica.git
+    cd conecta-politica
+    ```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+2.  Instale as dependências:
+    ```bash
+    npm install
+    # ou
+    yarn install
+    # ou
+    bun install
+    ```
 
-Follow these steps:
+3.  Configure as variáveis de ambiente:
+    Crie um arquivo `.env` na raiz do projeto e adicione as seguintes chaves (você precisará de um projeto no Supabase):
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+    ```env
+    VITE_SUPABASE_URL=sua_url_do_supabase
+    VITE_SUPABASE_PUBLISHABLE_KEY=sua_chave_publica_do_supabase
+    ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## Executando o Projeto
 
-# Step 3: Install the necessary dependencies.
-npm i
+Para iniciar o servidor de desenvolvimento:
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
 npm run dev
+# ou
+yarn dev
+# ou
+bun dev
 ```
 
-**Edit a file directly in GitHub**
+O aplicativo estará disponível em `http://localhost:8080`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Build para Produção
 
-**Use GitHub Codespaces**
+Para gerar a versão de produção:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
+```bash
+npm run build
+# ou
+yarn build
+# ou
+bun build
+```
+
+## Estrutura do Projeto
+
+- `src/components`: Componentes reutilizáveis da UI e específicos de funcionalidades (dashboard, feed, etc.).
+- `src/contexts`: Contextos do React (ex: AuthContext).
+- `src/hooks`: Hooks customizados.
+- `src/integrations`: Integrações com serviços externos (Supabase).
+- `src/lib`: Utilitários e funções auxiliares.
+- `src/pages`: Páginas da aplicação (Dashboard, Auth, Landing, etc.).
+
+## Contribuição
+
+1.  Faça um Fork do projeto.
+2.  Crie uma Branch para sua Feature (`git checkout -b feature/MinhaFeature`).
+3.  Faça o Commit de suas mudanças (`git commit -m 'Adiciona a MinhaFeature'`).
+4.  Faça o Push para a Branch (`git push origin feature/MinhaFeature`).
+5.  Abra um Pull Request.
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
 ## What technologies are used for this project?

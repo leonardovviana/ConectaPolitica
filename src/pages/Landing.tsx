@@ -117,7 +117,7 @@ export default function Landing() {
                 <TrendingUp className="w-5 h-5 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-headline">PolitiMonitor</h1>
+                <h1 className="text-headline">Conecta Política</h1>
                 <p className="text-caption hidden sm:block">Inteligência Política</p>
               </div>
             </div>
@@ -329,7 +329,7 @@ export default function Landing() {
               <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
                 <TrendingUp className="w-4 h-4 text-primary-foreground" />
               </div>
-              <span className="text-subhead">PolitiMonitor</span>
+              <span className="text-subhead">Conecta Política</span>
             </div>
             <div className="flex items-center gap-6 text-caption">
               <a href="#" className="hover:text-foreground transition-colors">Termos de Uso</a>
@@ -337,7 +337,7 @@ export default function Landing() {
               <a href="#" className="hover:text-foreground transition-colors">Contato</a>
             </div>
             <p className="text-caption">
-              © 2024 PolitiMonitor. Inteligência política para o Brasil.
+              © 2024 Conecta Política. Inteligência política para o Brasil.
             </p>
           </div>
         </div>

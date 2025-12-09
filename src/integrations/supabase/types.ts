@@ -14,6 +14,58 @@ export type Database = {
   }
   public: {
     Tables: {
+      mentions: {
+        Row: {
+          id: string
+          user_id: string
+          title: string
+          source: string
+          source_type: string
+          date: string
+          sentiment: string
+          priority: string
+          excerpt: string | null
+          url: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          title: string
+          source: string
+          source_type: string
+          date?: string
+          sentiment: string
+          priority: string
+          excerpt?: string | null
+          url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          title?: string
+          source?: string
+          source_type?: string
+          date?: string
+          sentiment?: string
+          priority?: string
+          excerpt?: string | null
+          url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mentions_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null

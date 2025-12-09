@@ -119,7 +119,7 @@ export default function Auth() {
               <TrendingUp className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-semibold text-white">PolitiMonitor</h1>
+              <h1 className="text-xl font-semibold text-white">Conecta Política</h1>
               <p className="text-sm text-white/70">Inteligência Política</p>
             </div>
           </Link>
@@ -145,7 +145,7 @@ export default function Auth() {
           </div>
 
           <p className="text-white/50 text-sm">
-            © 2024 PolitiMonitor. Todos os direitos reservados.
+            © 2024 Conecta Política. Todos os direitos reservados.
           </p>
         </div>
       </div>
@@ -157,7 +157,7 @@ export default function Auth() {
             <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
               <TrendingUp className="w-5 h-5 text-primary-foreground" />
             </div>
-            <h1 className="text-headline">PolitiMonitor</h1>
+            <h1 className="text-headline">Conecta Política</h1>
           </Link>
 
           <div className="mb-8">

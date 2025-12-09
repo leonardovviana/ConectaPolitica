@@ -34,7 +34,7 @@ export function Header({ className }: HeaderProps) {
               <BarChart3 className="w-5 h-5 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-headline">PolitiMonitor</h1>
+              <h1 className="text-headline">Conecta Política</h1>
               <p className="text-caption hidden sm:block">Inteligência Política</p>
             </div>
           </div>

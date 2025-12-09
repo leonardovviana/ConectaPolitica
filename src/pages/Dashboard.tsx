@@ -8,18 +8,25 @@ import { TopSourcesCard } from "@/components/dashboard/TopSourcesCard";
 import { Mention } from "@/components/feed/MentionCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { 
   TrendingUp, 
   MessageSquare, 
   Newspaper, 
   Users,
-  ChevronRight
+  ChevronRight,
+  Database
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import { monitoringService } from "@/services/monitoringService";
+import { useState } from "react";
+import { RefreshCw } from "lucide-react";
 
-// Mock data
-const chartData = [
+// Mock data for chart (could be aggregated from real data in a real app)
+const defaultChartData = [
   { date: "Seg", mentions: 45, positive: 28, negative: 12 },
   { date: "Ter", mentions: 52, positive: 35, negative: 10 },
   { date: "Qua", mentions: 78, positive: 45, negative: 20 },
@@ -29,67 +36,154 @@ const chartData = [
   { date: "Dom", mentions: 38, positive: 25, negative: 9 },
 ];
 
-const mentions: Mention[] = [
+const sampleMentions = [
   {
-    id: "1",
     title: "Prefeito anuncia novo programa de habitação popular para famílias de baixa renda",
     source: "G1 Política",
-    sourceType: "news",
-    date: "Há 2 horas",
+    source_type: "news",
     sentiment: "positive",
     priority: "high",
     excerpt: "O programa deve beneficiar mais de 5 mil famílias nos próximos dois anos, com investimento de R$ 50 milhões em infraestrutura.",
     url: "#",
   },
   {
-    id: "2",
     title: "Oposição critica atraso em obras de saneamento básico no município",
     source: "Folha Regional",
-    sourceType: "news",
-    date: "Há 4 horas",
+    source_type: "news",
     sentiment: "negative",
     priority: "urgent",
     excerpt: "Vereadores da oposição protocolaram requerimento pedindo explicações sobre o cronograma das obras prometidas.",
     url: "#",
   },
   {
-    id: "3",
     title: "Secretário de Saúde defende gestão em entrevista exclusiva",
     source: "YouTube - TV Local",
-    sourceType: "video",
-    date: "Há 6 horas",
+    source_type: "video",
     sentiment: "neutral",
+    priority: "medium",
     excerpt: "Em entrevista de 45 minutos, o secretário apresentou números e defendeu as ações da pasta durante a gestão.",
     url: "#",
   },
   {
-    id: "4",
     title: "Moradores elogiam nova iluminação pública no centro da cidade",
     source: "Instagram",
-    sourceType: "social",
-    date: "Há 8 horas",
+    source_type: "social",
     sentiment: "positive",
+    priority: "low",
     excerpt: "Publicações nas redes sociais destacam a melhoria na segurança e valorização do comércio local.",
     url: "#",
   },
 ];
 
-const topSources = [
-  { name: "G1 Política", type: "news" as const, mentions: 45, percentage: 85 },
-  { name: "Folha Regional", type: "news" as const, mentions: 32, percentage: 60 },
-  { name: "Instagram", type: "social" as const, mentions: 28, percentage: 52 },
-  { name: "YouTube", type: "video" as const, mentions: 18, percentage: 34 },
-];
-
 export default function Dashboard() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
       navigate("/auth");
     }
   }, [user, loading, navigate]);
+
+  const handleRefreshMentions = async () => {
+    if (!user) return;
+    
+    setIsUpdating(true);
+    try {
+      // Usa o nome do usuário como termo de busca inicial
+      // Em um app real, isso viria de uma configuração de "Termos Monitorados"
+      const searchTerm = user.user_metadata?.full_name || "Política Brasil";
+      
+      toast.info(`Buscando menções para: ${searchTerm}...`);
+      
+      const newMentions = await monitoringService.fetchMentions(searchTerm);
+      const savedCount = await monitoringService.saveMentions(newMentions, user.id);
+      
+      if (savedCount > 0) {
+        toast.success(`${savedCount} novas menções encontradas e salvas!`);
+        queryClient.invalidateQueries({ queryKey: ["mentions"] });
+      } else {
+        toast.info("Nenhuma menção nova encontrada no momento.");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao buscar atualizações.");
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const { data: mentions, isLoading: isLoadingMentions } = useQuery({
+    queryKey: ["mentions"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("mentions")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      
+      return data.map((item) => ({
+        id: item.id,
+        title: item.title,
+        source: item.source,
+        sourceType: item.source_type as "news" | "social" | "video" | "blog",
+        date: new Date(item.created_at).toLocaleDateString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+        sentiment: item.sentiment as "positive" | "negative" | "neutral",
+        priority: item.priority as "urgent" | "high" | "medium" | "low",
+        excerpt: item.excerpt || "",
+        url: item.url || "#",
+      }));
+    },
+    enabled: !!user,
+  });
+
+  const topSources = useMemo(() => {
+    if (!mentions || mentions.length === 0) return [];
+    const sourceCounts: Record<string, { count: number, type: string }> = {};
+    mentions.forEach(m => {
+      if (!sourceCounts[m.source]) {
+        sourceCounts[m.source] = { count: 0, type: m.sourceType };
+      }
+      sourceCounts[m.source].count++;
+    });
+
+    const total = mentions.length;
+    return Object.entries(sourceCounts)
+      .map(([name, { count, type }]) => ({
+        name,
+        type: type as "news" | "social" | "video" | "blog",
+        mentions: count,
+        percentage: Math.round((count / total) * 100)
+      }))
+      .sort((a, b) => b.mentions - a.mentions)
+      .slice(0, 4);
+  }, [mentions]);
+
+  const seedDataMutation = useMutation({
+    mutationFn: async () => {
+      if (!user) return;
+      
+      const mentionsToInsert = sampleMentions.map(m => ({
+        ...m,
+        user_id: user.id,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      }));
+
+      const { error } = await supabase.from("mentions").insert(mentionsToInsert);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["mentions"] });
+      toast.success("Dados de exemplo inseridos com sucesso!");
+    },
+    onError: (error) => {
+      toast.error("Erro ao inserir dados: " + error.message);
+    }
+  });
 
   if (loading) {
     return (
@@ -114,17 +208,35 @@ export default function Dashboard() {
                 Acompanhe sua reputação em tempo real
               </p>
             </div>
-            <Button variant="hero" className="opacity-0 animate-fade-in self-start sm:self-auto" style={{ animationDelay: "200ms", animationFillMode: "forwards" }}>
-              Gerar Relatório
-              <ChevronRight className="w-4 h-4" />
-            </Button>
+            <div className="flex gap-2 self-start sm:self-auto opacity-0 animate-fade-in" style={{ animationDelay: "200ms", animationFillMode: "forwards" }}>
+              <Button 
+                variant="outline" 
+                onClick={handleRefreshMentions} 
+                disabled={isUpdating}
+                className="gap-2"
+              >
+                <RefreshCw className={`w-4 h-4 ${isUpdating ? 'animate-spin' : ''}`} />
+                {isUpdating ? "Buscando..." : "Atualizar Menções"}
+              </Button>
+              
+              {mentions && mentions.length === 0 && (
+                <Button variant="outline" onClick={() => seedDataMutation.mutate()} disabled={seedDataMutation.isPending}>
+                  <Database className="w-4 h-4 mr-2" />
+                  {seedDataMutation.isPending ? "Inserindo..." : "Inserir Dados de Exemplo"}
+                </Button>
+              )}
+              <Button variant="hero">
+                Gerar Relatório
+                <ChevronRight className="w-4 h-4" />
+              </Button>
+            </div>
           </div>
 
           {/* Stats Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <StatCard
               title="Menções Hoje"
-              value="127"
+              value={mentions?.length.toString() || "0"}
               subtitle="+23% vs ontem"
               icon={MessageSquare}
               trend={{ value: 23, isPositive: true }}
@@ -133,15 +245,15 @@ export default function Dashboard() {
             />
             <StatCard
               title="Notícias"
-              value="45"
-              subtitle="Em 12 portais"
+              value={mentions?.filter(m => m.sourceType === 'news').length.toString() || "0"}
+              subtitle="Em portais"
               icon={Newspaper}
               variant="default"
               delay={200}
             />
             <StatCard
               title="Redes Sociais"
-              value="82"
+              value={mentions?.filter(m => m.sourceType === 'social').length.toString() || "0"}
               subtitle="Instagram, Facebook"
               icon={Users}
               variant="trust"
@@ -163,16 +275,16 @@ export default function Dashboard() {
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
           {/* Chart - 2 columns */}
           <div className="lg:col-span-2">
-            <MentionChart data={chartData} />
+            <MentionChart data={defaultChartData} />
           </div>
 
           {/* Sentiment Ring */}
           <div className="glass-card rounded-2xl p-6 flex flex-col items-center justify-center">
             <h3 className="text-title-3 mb-6 self-start">Sentimento Geral</h3>
             <SentimentRing
-              positive={65}
-              negative={20}
-              neutral={15}
+              positive={mentions?.filter(m => m.sentiment === 'positive').length || 0}
+              negative={mentions?.filter(m => m.sentiment === 'negative').length || 0}
+              neutral={mentions?.filter(m => m.sentiment === 'neutral').length || 0}
               size="lg"
             />
             <div className="mt-6">
@@ -208,7 +320,11 @@ export default function Dashboard() {
               <ChevronRight className="w-4 h-4" />
             </Button>
           </div>
-          <MentionFeed mentions={mentions} />
+          {isLoadingMentions ? (
+             <div className="text-center py-10 text-muted-foreground">Carregando menções...</div>
+          ) : (
+            <MentionFeed mentions={mentions || []} />
+          )}
         </section>
 
         {/* Footer */}
@@ -218,10 +334,10 @@ export default function Dashboard() {
               <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
                 <TrendingUp className="w-4 h-4 text-primary-foreground" />
               </div>
-              <span className="text-subhead">PolitiMonitor</span>
+              <span className="text-subhead">Conecta Política</span>
             </div>
             <p className="text-caption">
-              © 2024 PolitiMonitor. Inteligência política para o Brasil.
+              © 2024 Conecta Política. Inteligência política para o Brasil.
             </p>
           </div>
         </footer>

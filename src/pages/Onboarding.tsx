@@ -27,7 +27,7 @@ interface OnboardingStep {
 const steps: OnboardingStep[] = [
   {
     icon: TrendingUp,
-    title: "Bem-vindo ao PolitiMonitor",
+    title: "Bem-vindo ao Conecta Política",
     description: "Sua plataforma de inteligência política para monitoramento de reputação em tempo real.",
     features: [
       { icon: Brain, text: "Inteligência Artificial avançada" },
@@ -103,7 +103,7 @@ export default function Onboarding() {
           <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
             <TrendingUp className="w-5 h-5 text-primary-foreground" />
           </div>
-          <h1 className="text-headline hidden sm:block">PolitiMonitor</h1>
+          <h1 className="text-headline hidden sm:block">Conecta Política</h1>
         </div>
         <Button variant="ghost" onClick={skip}>
           Pular
